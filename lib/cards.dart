@@ -8,9 +8,11 @@ import 'package:prototype/profiles.dart';
 
 class CardStack extends StatefulWidget {
   final MatchEngine matchEngine;
+  final bool showOverlay;
 
   CardStack({
     this.matchEngine,
+    this.showOverlay = true,
   });
 
   @override
@@ -142,12 +144,14 @@ class _CardStackState extends State<CardStack> {
         new DraggableCard(
           card: _buildBackCard(),
           isDraggable: false,
+          showOverlay: widget.showOverlay,
         ),
         new DraggableCard(
           card: _buildFrontCard(),
           slideTo: _desiredSlideOutDirection(),
           onSlideUpdate: _onSlideUpdate,
           onSlideOutComplete: _onSlideOutComplete,
+          showOverlay: widget.showOverlay,
         ),
       ],
     );
@@ -166,6 +170,7 @@ class DraggableCard extends StatefulWidget {
   final SlideDirection slideTo;
   final Function(double distance) onSlideUpdate;
   final Function(SlideDirection direction) onSlideOutComplete;
+  final bool showOverlay;
 
   DraggableCard({
     this.card,
@@ -173,6 +178,7 @@ class DraggableCard extends StatefulWidget {
     this.slideTo,
     this.onSlideUpdate,
     this.onSlideOutComplete,
+    this.showOverlay = true,
   });
 
   @override
@@ -374,7 +380,7 @@ class _DraggableCardState extends State<DraggableCard> with TickerProviderStateM
   @override
   Widget build(BuildContext context) {
     return new AnchoredOverlay(
-      showOverlay: true,
+      showOverlay: widget.showOverlay,
       child: new Center(),
       overlayBuilder: (BuildContext context, Rect anchorBounds, Offset anchor) {
         return CenterAbout(

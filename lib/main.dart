@@ -56,8 +56,10 @@ class _MyHomePageState extends State<MyHomePage> {
           icon: new Icon(
             Icons.chat_bubble,
           ),
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (_) => ChatScreen()));
+          onPressed: () async{
+            hideOverlay();
+            await Navigator.push(context, MaterialPageRoute(builder: (_) => ChatScreen()));
+            showOverlay();
           },
         ),
         PopupMenuButton<int>(
@@ -132,12 +134,27 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  bool _showOverlay = true;
+
+  void hideOverlay(){
+    setState(() {
+      _showOverlay = false;
+    });
+  }
+
+  void showOverlay(){
+    setState(() {
+      _showOverlay = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: _buildAppBar(),
       body: new CardStack(
         matchEngine: matchEngine,
+        showOverlay: _showOverlay,
       ),
       bottomNavigationBar: _buildBottomBar(),
     );
