@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prototype/cards.dart';
+import 'package:prototype/chat.dart';
 import 'package:prototype/matches.dart';
 import 'package:prototype/profiles.dart';
 
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: new ThemeData(
         primaryColorBrightness: Brightness.light,
@@ -50,16 +52,32 @@ class _MyHomePageState extends State<MyHomePage> {
         colors: Colors.red,
       ),
       actions: <Widget>[
-        new IconButton(
+        IconButton(
           icon: new Icon(
             Icons.chat_bubble,
-            color: Colors.grey,
-            size: 40.0,
           ),
           onPressed: () {
-            // TODO:
+            Navigator.push(context, MaterialPageRoute(builder: (_) => ChatScreen()));
           },
-        )
+        ),
+        PopupMenuButton<int>(
+          itemBuilder: (context) => [
+            PopupMenuItem(
+              value: 1,
+              child: Text(
+                "Item 1",
+              ),
+            ),
+            PopupMenuItem(
+              value: 2,
+              child: Text(
+                "Item 2",
+              ),
+            ),
+          ],
+          elevation: 4,
+//          padding: EdgeInsets.symmetric(horizontal: 50),
+        ),
       ],
     );
   }
