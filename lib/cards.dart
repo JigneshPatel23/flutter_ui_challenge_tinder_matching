@@ -256,17 +256,19 @@ class _DraggableCardState extends State<DraggableCard> with TickerProviderStateM
     }
 
     if (oldWidget.slideTo == null && widget.slideTo != null) {
-      switch (widget.slideTo) {
-        case SlideDirection.left:
-          _slideLeft();
-          break;
-        case SlideDirection.right:
-          _slideRight();
-          break;
-        case SlideDirection.up:
-          _slideUp();
-          break;
-      }
+      WidgetsBinding.instance.addPostFrameCallback((_){
+        switch (widget.slideTo) {
+          case SlideDirection.left:
+            _slideLeft();
+            break;
+          case SlideDirection.right:
+            _slideRight();
+            break;
+          case SlideDirection.up:
+            _slideUp();
+            break;
+        }
+      });
     }
   }
 
